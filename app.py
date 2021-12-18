@@ -10,22 +10,22 @@ def index():
 
 
 @app.route('/project/new')
-def new_project():
+def create():
     return 'Hello!'
 
 
 @app.route('/project/{id}')
-def project():
+def detail():
     return 'Hello!'
 
 
 @app.route('/project/{id}/edit')
-def edit_project():
+def edit():
     return 'Hello!'
 
 
 @app.route('/project/{id}/delete')
-def delete_project():
+def delete():
     return 'Hello!'
 
 
