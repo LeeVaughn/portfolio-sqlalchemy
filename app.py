@@ -11,22 +11,22 @@ def index():
 
 @app.route('/project/new')
 def create():
-    return 'Hello!'
+    return render_template('projectform.html')
 
 
 @app.route('/project/{id}')
 def detail():
-    return 'Hello!'
+    return render_template('detail.html')
 
 
 @app.route('/project/{id}/edit')
 def edit():
-    return 'Hello!'
+    pass
 
 
 @app.route('/project/{id}/delete')
 def delete():
-    return 'Hello!'
+    pass
 
 
 if __name__ == '__main__':
