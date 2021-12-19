@@ -1,5 +1,4 @@
 from flask import render_template, url_for, request, redirect
-from werkzeug.utils import redirect
 from models import db, Project, app
 
 
@@ -21,13 +20,13 @@ def create():
 
 @app.route('/project/<id>')
 def detail(id):
-    project = Project.query.get(id)
+    project = Project.query.get_or_404(id)
     return render_template('detail.html', project=project)
 
 
 @app.route('/project/<id>/edit', methods=['GET', 'POST'])
 def edit(id):
-    project = Project.query.get(id)
+    project = Project.query.get_or_404(id)
     if request.form:
         project.title = request.form['title']
         project.date = request.form['date']
@@ -41,10 +40,15 @@ def edit(id):
 
 @app.route('/project/<id>/delete')
 def delete(id):
-    project = Project.query.get(id)
+    project = Project.query.get_or_404(id)
     db.session.delete(project)
     db.session.commit()
     return redirect(url_for('index'))
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('404.html', msg=error), 404
 
 
 if __name__ == '__main__':
