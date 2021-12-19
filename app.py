@@ -1,4 +1,5 @@
-from flask import render_template, url_for, request
+from flask import render_template, url_for, request, redirect
+from werkzeug.utils import redirect
 from models import db, Project, app
 
 
@@ -9,7 +10,11 @@ def index():
 
 @app.route('/project/new', methods=['GET', 'POST'])
 def create():
-    print(request.form)
+    if request.form:
+        new_project = Project(title=request.form['title'], date=request.form['date'], desc=request.form['desc'], skills=request.form['skills'], github=request.form['github'])
+        db.session.add(new_project)
+        db.session.commit()
+        return redirect(url_for('index'))
     return render_template('projectform.html')
 
 
