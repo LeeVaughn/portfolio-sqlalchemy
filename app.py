@@ -19,18 +19,20 @@ def create():
     return render_template('projectform.html')
 
 
-@app.route('/project/{id}')
-def detail():
-    return render_template('detail.html')
+@app.route('/project/<id>')
+def detail(id):
+    project = Project.query.get(id)
+    print(project)
+    return render_template('detail.html', project=project)
 
 
-@app.route('/project/{id}/edit')
-def edit():
+@app.route('/project/<id>/edit')
+def edit(id):
     pass
 
 
-@app.route('/project/{id}/delete')
-def delete():
+@app.route('/project/<id>/delete')
+def delete(id):
     pass
 
 
