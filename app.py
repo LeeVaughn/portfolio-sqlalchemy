@@ -22,18 +22,29 @@ def create():
 @app.route('/project/<id>')
 def detail(id):
     project = Project.query.get(id)
-    print(project)
     return render_template('detail.html', project=project)
 
 
-@app.route('/project/<id>/edit')
+@app.route('/project/<id>/edit', methods=['GET', 'POST'])
 def edit(id):
-    pass
+    project = Project.query.get(id)
+    if request.form:
+        project.title = request.form['title']
+        project.date = request.form['date']
+        project.desc = request.form['desc']
+        project.skills = request.form['skills']
+        project.github = request.form['github']
+        db.session.commit()
+        return redirect(url_for('index'))
+    return render_template('editprojectform.html', project=project)
 
 
 @app.route('/project/<id>/delete')
 def delete(id):
-    pass
+    project = Project.query.get(id)
+    db.session.delete(project)
+    db.session.commit()
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
